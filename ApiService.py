@@ -129,7 +129,7 @@ AFTER THIS LINE, VILT WILL BE LAUNCH
 
 """
 """ 
-
+#https://cdn-lfs.huggingface.co/dandelin/vilt-b32-finetuned-vqa/4d5f3409947b0369487ece7c5868f0040ceb67d25735dbb4ac5e99e03bab3a19
 processor = ViltProcessor.from_pretrained("processor")
 model = ViltForQuestionAnswering.from_pretrained("model")
 
