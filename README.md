@@ -29,8 +29,4 @@ pip3 install pyodbc
 pip3 install json
 pip3 install pymssql
 pip3 install requests 
-
-
-    
-
 ```
