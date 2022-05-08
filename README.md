@@ -22,7 +22,6 @@ pip3 install flask
 pip3 install torch torchvision torchaudio
 pip3 install werkzeug
 pip3 install transformers
-pip3 install base64
 pip3 install pillow
 pip3 install BytesIO
 pip3 install pyodbc
