@@ -11,7 +11,7 @@ https://cdn-lfs.huggingface.co/dandelin/vilt-b32-finetuned-vqa/4d5f3409947b03694
 * then paste it to the model folder 
 * and just double click ApiService.py file
 * server will run on the http://31.145.7.41/ url
-* Note: Kadir Has University IBM Machine have 31.145.7.41 external ip, so if your server have not external ip server will work on just local network
+* Note: Kadir Has University IBM Machine have 31.145.7.41 external ip, so if your server have not this external ip server will work on just local network
 
 ## Needed Dependency Import Libraries
 
