@@ -20,7 +20,13 @@ UPLOAD_FOLDER = '/images'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+preprocessor = ViltProcessor.from_pretrained('dandelin/vilt-b32-finetuned-vqa')
+saved_dict = torch.load('vilt_VG_finetuned.pth')
 
+model = saved_dict['model']
+id2answer = saved_dict['id2answer']
+
+print('Model loaded successfully!')
 
 # def upload_filee():
 #     if request.method == 'POST':
@@ -105,19 +111,60 @@ def history_user():
 
 
 
+"""
+Our model is working below
+"""
+def answer_question(image, text):
+    encoding = preprocessor(image, text, return_tensors='pt')
+    
+    model.eval()
+
+    with torch.no_grad():
+        outputs = model(**encoding)
+     
+    logits = outputs.logits
+    idx = logits.argmax(-1).item()
+    predicted_answer = id2answer[idx]
+    
+    return predicted_answer
+    
+def predict_answer(image_path, question_str):
+    image_raw = Image.open(image_path).convert('RGB')
+
+    predicted_answer = answer_question(image_raw, question_str)
+
+    # BU KISMI ISTERSENIZ SILEBILIRSINIZ
+    #plt.yticks([])
+    #plt.tight_layout()
+    #plt.title(f'{question_str}\n{predicted_answer}')
+    #plt.imshow(image_raw)
+    
+    print(f'Answer for the image {image_path} is: {predicted_answer}')
+    
+    # BU KISMI API UZERINDEN UYGULAMAYA GERI GONDERIN
+    return predicted_answer
+
 @app.route('/question', methods=['POST', "GET"])
 def ask_question():
     try:
         qstn = request.args.get("question")
-        username = request.args.get("username")
-        answer = "Not Completed Yet"
+        question = request.args.get("question")
+        username = request.args.get("username") 
         photoName = request.args.get("photoName")
+        photoUrl = './images/'+ photoName
+        image_raw = Image.open(photoUrl).convert('RGB')
 
+        predicted_answer = answer_question(image_raw, qstn)
+ 
+        print(f'Answer for the image {photoUrl} is: {predicted_answer}') 
 
-        addHistory(username, qstn,answer, photoName)
+        qstn = predicted_answer
+        addHistory(username, question, predicted_answer, photoName)
+        # return predicted_answer
+
     except:
         qstn = " Null"
-    return "Question: " + str(qstn)
+    return "Answer: " + str(qstn)
 
 
 

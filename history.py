@@ -20,15 +20,19 @@ def history(username=""):
 
 
 def addHistory(username, question,answer, photoName):
-    print()
+    print(f'adding to database history {username} {question} {answer} {photoName}')
     
-    query = "insert into History values('"+username+"','"+question+"','"+answer+"', '"+photoName+"')"
-    
+    query = "insert into History values('"+username+"','"+question+"','"+answer+"','"+photoName+"')"
+    print(query)
     try:
         cursor.execute(query)
-        cursor.commit()
+        conn.commit()
+        print(True)
         return True
     except:
+        print(False)
         return False
 
+
+# addHistory("userngggame", "quggggestion", "angggswer", "ggggg")
 
