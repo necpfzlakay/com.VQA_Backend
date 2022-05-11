@@ -116,32 +116,12 @@ Our model is working below
 """
 def answer_question(image, text):
     encoding = preprocessor(image, text, return_tensors='pt')
-    
     model.eval()
-
     with torch.no_grad():
         outputs = model(**encoding)
-     
     logits = outputs.logits
     idx = logits.argmax(-1).item()
     predicted_answer = id2answer[idx]
-    
-    return predicted_answer
-    
-def predict_answer(image_path, question_str):
-    image_raw = Image.open(image_path).convert('RGB')
-
-    predicted_answer = answer_question(image_raw, question_str)
-
-    # BU KISMI ISTERSENIZ SILEBILIRSINIZ
-    #plt.yticks([])
-    #plt.tight_layout()
-    #plt.title(f'{question_str}\n{predicted_answer}')
-    #plt.imshow(image_raw)
-    
-    print(f'Answer for the image {image_path} is: {predicted_answer}')
-    
-    # BU KISMI API UZERINDEN UYGULAMAYA GERI GONDERIN
     return predicted_answer
 
 @app.route('/question', methods=['POST', "GET"])
@@ -153,15 +133,11 @@ def ask_question():
         photoName = request.args.get("photoName")
         photoUrl = './images/'+ photoName
         image_raw = Image.open(photoUrl).convert('RGB')
-
         predicted_answer = answer_question(image_raw, qstn)
- 
         print(f'Answer for the image {photoUrl} is: {predicted_answer}') 
-
         qstn = predicted_answer
         addHistory(username, question, predicted_answer, photoName)
         # return predicted_answer
-
     except:
         qstn = " Null"
     return "Answer: " + str(qstn)
@@ -180,17 +156,14 @@ AFTER THIS LINE, VILT WILL BE LAUNCH
 processor = ViltProcessor.from_pretrained("processor")
 model = ViltForQuestionAnswering.from_pretrained("model")
 
-def answer_question(image, text):
+def answer_question_vilt(image, text):
     encoding = processor(image, text, return_tensors="pt")
-
     # forward pass
     with torch.no_grad():
         outputs = model(**encoding)
-     
     logits = outputs.logits
     idx = logits.argmax(-1).item()
-    predicted_answer = model.config.id2label[idx]
-   
+    predicted_answer = model.config.id2label[idx]   
     return predicted_answer
 
 @app.route('/vilt', methods=['POST'])
@@ -202,7 +175,7 @@ def main():
     image_file = BytesIO(image_bytes)
     image = Image.open(image_file)
     question = request.get_json()["question"]
-    answer = answer_question(image, question)
+    answer = answer_question_vilt(image, question)
     print('answer', answer)
     return {'answer': answer}
 
