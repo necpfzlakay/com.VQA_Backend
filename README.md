@@ -8,7 +8,7 @@ Back-end Python server of the Visual Question Answering as Microservices final p
 ```
 https://cdn-lfs.huggingface.co/dandelin/vilt-b32-finetuned-vqa/4d5f3409947b0369487ece7c5868f0040ceb67d25735dbb4ac5e99e03bab3a19
 ```
-* then paste it to the model folder 
+* then paste it to the model folder and change name of model to 'pytorch_model.bin' 
 * After that, Download the main modal by given link below, and paste it to same folder with ApiService.py file 
 ```
 https://drive.google.com/file/d/16UQByRv_jzrlZ0IiyqkDzB_6YdJ_2wWA/view?usp=sharing
