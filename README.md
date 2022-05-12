@@ -10,9 +10,9 @@ https://cdn-lfs.huggingface.co/dandelin/vilt-b32-finetuned-vqa/4d5f3409947b03694
 ```
 * then paste it to the model folder 
 * After that, Download the main modal by given link below, and paste it to same folder with ApiService.py file 
-* ```
-* https://drive.google.com/file/d/16UQByRv_jzrlZ0IiyqkDzB_6YdJ_2wWA/view?usp=sharing
-* ```
+```
+https://drive.google.com/file/d/16UQByRv_jzrlZ0IiyqkDzB_6YdJ_2wWA/view?usp=sharing
+```
 * and just double click ApiService.py file
 * server will run on the http://31.145.7.41/ url
 * Note: Our server have 31.145.7.41 external ip, so if your server have not this external ip server will work on just local network
